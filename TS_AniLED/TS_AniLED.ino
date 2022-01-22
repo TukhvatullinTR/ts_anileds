@@ -34,8 +34,9 @@ void  MotionDetected() {
 
 // Инициализация
 void setup() {
-//  Serial.begin(9600);
-//  Serial.println("curr_motion curr_duration curr_brightness PAR_EFFECT showEffect");
+  Serial.begin(9600);
+  Serial.flush();
+  Serial.println("curr_motion curr_duration curr_brightness PAR_EFFECT showEffect");
   pinMode(LED_PIN, OUTPUT);
   attachInterrupt(0, MotionDetected, RISING);
   Menu_init();

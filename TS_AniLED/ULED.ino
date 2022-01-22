@@ -26,7 +26,7 @@ void LED_run(byte effect, byte bright) {
       case  3: effect_rainbow      (); break; //rainbow
       case  4: effect_solid        (255,255,255); break;//white
       case  5: effect_solid        (  0,255,  0); break;//green
-      case  6: effect_bpm          ()  ; break;
+      case  6: effect_bpm          (); break;
       case  7: effect_runing_lights(); break;
       case  8: effect_runing_sinus (); break;
       case  9: effect_confetti     (); break;
@@ -106,22 +106,22 @@ void effect_confetti()
 
 void effect_juggle() {
   static float step;
-  fadeToBlackBy( leds, LED_CNT, 5);
+  fadeToBlackBy( leds, LED_CNT, 20);
   for( int i = 0; i < 8; i++) {
-    leds[beatsin16( i+7, 0, LED_CNT-1 )] |= CHSV(step, 255, 255);
+    leds[beatsin16( i+7, 0, LED_CNT-1 )] = CHSV(step, 255, 255);
     step += 32;
   }
 }
 
-void effect_bpm()
-{
+void effect_bpm() {
+  static uint32_t tmr, interval = 100;
   static float step;
-  fadeToBlackBy( leds, LED_CNT, 20);
-  uint8_t BeatsPerMinute = 42;
-  CRGBPalette16 palette = PartyColors_p;
-  uint8_t beat = beatsin8( BeatsPerMinute, 64, 255);
-  for( int i = 0; i < LED_CNT; i++) { //9948
-    leds[i] = ColorFromPalette(palette, step+(i*2), beat-step+(i*10));
-    step += 32;
+  fadeToBlackBy( leds, LED_CNT, 30);
+  if (millis() - tmr > interval) {
+    tmr = millis();
+    for (int i=0; i < LED_CNT; i++)
+      leds[i] = random(1,10) == 1
+                ? CHSV(step++, random(255), random(128, 255))
+                : leds[i];
   }
 }

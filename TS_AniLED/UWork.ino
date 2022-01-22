@@ -38,25 +38,25 @@ void Work_run() {
   // Диммер включения/выключения свечения
   if (curr_duration > 0) {
     if (curr_brightness < params[PAR_BRIGHT_MAX].value)
-      curr_brightness = curr_brightness + (params[PAR_BRIGHT_MAX].value - curr_brightness) / (params[PAR_BRIGHT_MAX].value / 5) + 0.01;
+      curr_brightness = curr_brightness + (params[PAR_BRIGHT_MAX].value - curr_brightness) / (params[PAR_BRIGHT_MAX].value / 2.5) + 0.01;
     else
       curr_brightness = params[PAR_BRIGHT_MAX].value;
     if (curr_brightness > params[PAR_BRIGHT_MAX].value) curr_brightness = params[PAR_BRIGHT_MAX].value;
   } else {
     if (curr_brightness > params[PAR_BRIGHT_MIN].value)
-      curr_brightness = curr_brightness - (params[PAR_BRIGHT_MAX].value - curr_brightness) / (params[PAR_BRIGHT_MAX].value / 5) - 0.01;
+      curr_brightness = curr_brightness - (params[PAR_BRIGHT_MAX].value - curr_brightness) / (params[PAR_BRIGHT_MAX].value / 2.5) - 0.01;
     else
       curr_brightness = params[PAR_BRIGHT_MIN].value;
     if (curr_brightness < params[PAR_BRIGHT_MIN].value) curr_brightness = params[PAR_BRIGHT_MIN].value;
   }
 
   // Лог
-//  String s =  String(curr_motion   * 50) + " " +
-//              String(curr_duration * 10) + " " +
-//              String(curr_brightness   ) + " " +            
-//              String(params[PAR_EFFECT].value * 10) + " " +
-//              String(showEffect * 10);
-//  Serial.println(s);
+  String s =  String(curr_motion              * 50) + " " +
+              String(curr_duration            * 10) + " " +
+              String(curr_brightness              ) + " " +            
+              String(params[PAR_EFFECT].value * 10) + " " +
+              String(showEffect               * 10);
+  Serial.println(s);
 }
 
 void Work_show() {
